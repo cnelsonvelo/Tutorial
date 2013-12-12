@@ -1,37 +1,32 @@
 package com.example.firstapp;
 
-import android.os.Build;
 import android.os.Bundle;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import android.support.v4.app.NavUtils;
 
 public class DisplayMessageActivity extends Activity {
 
-	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_display_message);
 		// Show the Up button in the action bar.
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
-			setupActionBar();
+		setupActionBar();
 		
-		// get the message
+		// handle the incoming intent
 		Intent intent = getIntent();
-		String message = intent.getStringExtra(MainActivity.EXTRA_DATA);
 		
-		// display the message
+		// create the view to handle the intent
 		TextView view = new TextView(this);
 		view.setTextSize(40);
-		view.setText(message);
+		view.setText(intent.getStringExtra(MainActivity.EXTRA_DATA_MESSAGE));
 		
-		// set the text view as the layout
+		// set the view as the only thing to display
 		setContentView(view);
-		
 	}
 
 	/**
@@ -41,6 +36,13 @@ public class DisplayMessageActivity extends Activity {
 
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 
+	}
+
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.display_message, menu);
+		return true;
 	}
 
 	@Override

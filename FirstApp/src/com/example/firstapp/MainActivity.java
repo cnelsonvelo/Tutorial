@@ -2,6 +2,9 @@ package com.example.firstapp;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v4.app.NavUtils;
 import android.view.Menu;
@@ -11,9 +14,9 @@ import android.widget.EditText;
 
 public class MainActivity extends Activity {
 
-    public static final String EXTRA_DATA = "com.example.firstapp.MainActivity.EXTRA_DATA";
-
-	@Override
+	public static String EXTRA_DATA_MESSAGE = "com.example.firstapp.MainActivity.EXTRA_DATA_MESSAGE";
+	
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -25,6 +28,18 @@ public class MainActivity extends Activity {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
+    }
+
+    public void sendMessage(View view) {
+    	Intent intent = new Intent(this, DisplayMessageActivity.class);
+    	
+    	// get the message from the dialog and save it into the intent
+    	EditText txt = (EditText) findViewById(R.id.edit_message);
+    	String msg = txt.getText().toString();
+    	intent.putExtra(EXTRA_DATA_MESSAGE, msg);
+    	
+    	// handle the intent
+    	startActivity(intent);
     }
     
 	@Override
@@ -41,24 +56,20 @@ public class MainActivity extends Activity {
 			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		case R.id.action_search:
-			openSearch();
-			return true;
-		case R.id.action_settings:
+			onSearch();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
 	}
-    
-    public void sendMessage(View view) {
-    	Intent intent = new Intent(this, DisplayMessageActivity.class);
-    	EditText txt = (EditText) findViewById(R.id.edit_text);
-    	String msg = txt.getText().toString();
-    	intent.putExtra(EXTRA_DATA, msg);
-    	startActivity(intent);
-    }
-    
-    private void openSearch() {
-    	Intent intent = new Intent(this, SearchActivity.class);
-    	startActivity(intent);
-    }
+	
+	private void onSearch() {
+		AlertDialog alert = new AlertDialog.Builder(this)
+				.setMessage(getString(R.string.on_search))
+				.setPositiveButton(getString(R.string.ok_button), new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface arg0, int arg1) {						
+					}
+				}).create();
+		alert.show();
+	}
 }

@@ -30,14 +30,6 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.example.firstapp.MainActivity" />
         </activity>
-        <activity
-            android:name="com.example.firstapp.SearchActivity"
-            android:label="@string/title_activity_search"
-            android:parentActivityName="com.example.firstapp.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.firstapp.MainActivity" />
-        </activity>
     </application>
 
 </manifest>
